@@ -1,18 +1,21 @@
 package com.aroon.business.service;
 
-import com.aroon.business.entity.core.User;
+import com.aroon.business.dto.request.UserCreateRequest;
+import com.aroon.business.dto.request.UserUpdateRequest;
+import com.aroon.business.dto.response.UserResponse;
 
 import java.util.List;
 
 public interface UserService {
 
-    User createUser(User user);
+    UserResponse createUser(UserCreateRequest request);
 
-    User getUserById(Long id);
+    UserResponse getUserBySeq(Long userSeq);
 
-    List<User> getAllUsers();
+    List<UserResponse> getAllUsers();
 
-    User updateUser(User user);
+    UserResponse updateUser(Long userSeq, UserUpdateRequest request);
 
-    boolean deleteUser(Long id);
+    void deleteUser(Long userSeq);
+
 }

@@ -1,5 +1,7 @@
 package com.aroon.business.entity.core;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
@@ -10,6 +12,9 @@ import lombok.*;
 @AllArgsConstructor
 @TableName("role_permission")
 public class RolePermission extends BaseEntity {
+
+    @TableId(value = "role_permission_seq", type = IdType.AUTO)
+    private Long rolePermissionSeq;
 
     private Long roleSeq;
 

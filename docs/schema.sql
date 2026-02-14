@@ -85,37 +85,46 @@ CREATE TABLE `menu` (
 -- =====================================================
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
-    `user_seq` BIGINT NOT NULL COMMENT '사용자 SEQ',
-    `role_seq` BIGINT NOT NULL COMMENT '역할 SEQ',
-    PRIMARY KEY (`user_seq`, `role_seq`),
-    KEY `idx_user_role_user` (`user_seq`),
-    KEY `idx_user_role_role` (`role_seq`)
+     `user_role_seq` BIGINT NOT NULL AUTO_INCREMENT COMMENT '사용자-역할 SEQ',
+     `user_seq`      BIGINT NOT NULL COMMENT '사용자 SEQ',
+     `role_seq`      BIGINT NOT NULL COMMENT '역할 SEQ',
+     `created_at`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
+     `updated_at`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
+     PRIMARY KEY (`user_role_seq`),
+     UNIQUE KEY `uk_user_role` (`user_seq`, `role_seq`),
+     KEY `idx_user_role_user` (`user_seq`),
+     KEY `idx_user_role_role` (`role_seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='사용자-역할 관계';
-
 -- =====================================================
 -- 6. 역할-권한 관계 테이블
 -- =====================================================
 DROP TABLE IF EXISTS `role_permission`;
 CREATE TABLE `role_permission` (
-    `role_seq` BIGINT NOT NULL COMMENT '역할 SEQ',
-    `permission_seq` BIGINT NOT NULL COMMENT '권한 SEQ',
-    PRIMARY KEY (`role_seq`, `permission_seq`),
-    KEY `idx_role_permission_role` (`role_seq`),
-    KEY `idx_role_permission_permission` (`permission_seq`)
+   `role_permission_seq` BIGINT NOT NULL AUTO_INCREMENT COMMENT '역할-권한 SEQ',
+   `role_seq`            BIGINT NOT NULL COMMENT '역할 SEQ',
+   `permission_seq`      BIGINT NOT NULL COMMENT '권한 SEQ',
+   `created_at`          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
+   `updated_at`          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
+   PRIMARY KEY (`role_permission_seq`),
+   UNIQUE KEY `uk_role_permission` (`role_seq`, `permission_seq`),
+   KEY `idx_role_permission_role` (`role_seq`),
+   KEY `idx_role_permission_permission` (`permission_seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='역할-권한 관계';
-
 -- =====================================================
 -- 7. 역할-메뉴 관계 테이블
 -- =====================================================
 DROP TABLE IF EXISTS `role_menu`;
 CREATE TABLE `role_menu` (
-    `role_seq` BIGINT NOT NULL COMMENT '역할 SEQ',
-    `menu_seq` BIGINT NOT NULL COMMENT '메뉴 SEQ',
-    PRIMARY KEY (`role_seq`, `menu_seq`),
-    KEY `idx_role_menu_role` (`role_seq`),
-    KEY `idx_role_menu_menu` (`menu_seq`)
+     `role_menu_seq` BIGINT NOT NULL AUTO_INCREMENT COMMENT '역할-메뉴 SEQ',
+     `role_seq`      BIGINT NOT NULL COMMENT '역할 SEQ',
+     `menu_seq`      BIGINT NOT NULL COMMENT '메뉴 SEQ',
+     `created_at`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시',
+     `updated_at`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일시',
+     PRIMARY KEY (`role_menu_seq`),
+     UNIQUE KEY `uk_role_menu` (`role_seq`, `menu_seq`),
+     KEY `idx_role_menu_role` (`role_seq`),
+     KEY `idx_role_menu_menu` (`menu_seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='역할-메뉴 관계';
-
 -- =====================================================
 -- 초기 데이터 삽입
 -- =====================================================
@@ -181,9 +190,6 @@ INSERT INTO `user` (`user_id`, `password`, `email`, `nickname`) VALUES
 
 -- 관리자에게 ADMIN 역할 부여
 INSERT INTO `user_role` (`user_seq`, `role_seq`) VALUES (1, 1);
-
-
-
 
 
 -- =====================================================
