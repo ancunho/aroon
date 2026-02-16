@@ -104,6 +104,10 @@ public class GlobalExceptionHandler {
             case 403 -> HttpStatus.FORBIDDEN;
             case 404 -> HttpStatus.NOT_FOUND;
             default -> {
+                // 인증 관련 에러 (5xxx)는 HTTP 401
+                if (errorCode.getCode() >= 5000 && errorCode.getCode() < 6000) {
+                    yield HttpStatus.UNAUTHORIZED;
+                }
                 // 1000번대 이상의 비즈니스 에러는 HTTP 200으로 응답
                 // (HTTP 상태는 성공이지만, body의 code로 에러를 구분)
                 if (errorCode.getCode() >= 1000) {

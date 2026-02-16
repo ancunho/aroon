@@ -184,9 +184,9 @@ INSERT INTO `menu` (`parent_seq`, `menu_code`, `menu_name`, `menu_type`, `path`,
 INSERT INTO `role_menu` (`role_seq`, `menu_seq`)
 SELECT 1, menu_seq FROM `menu`;
 
--- 관리자 계정 (password: admin123 - BCrypt 암호화)
+-- 관리자 계정 (password: admin123d - BCrypt 암호화)
 INSERT INTO `user` (`user_id`, `password`, `email`, `nickname`) VALUES
-('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EH', 'admin@aroon.com', '관리자');
+('admin', '$2a$10$71Q5CaWyFpGkJJAXcEf3x.rHLHvI5wqstcLKIr5gPo3OgGze4I8IO', 'admin@aroon.com', '관리자');
 
 -- 관리자에게 ADMIN 역할 부여
 INSERT INTO `user_role` (`user_seq`, `role_seq`) VALUES (1, 1);

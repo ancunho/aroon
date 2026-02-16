@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
         // Entity 생성
         User user = User.builder()
                 .userId(request.getUserId())
-                .password(request.getPassword())    // Phase 3에서 BCrypt 암호화 적용 예정
+                .password(passwordEncoder.encode(request.getPassword()))
                 .email(request.getEmail())
                 .nickname(request.getNickname())
                 .status(1)                           // 기본값: 활성
@@ -95,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
         // null이 아닌 필드만 업데이트 (선택적 수정)
         if (request.getPassword() != null) {
-            user.setPassword(request.getPassword());  // Phase 3에서 BCrypt 적용
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
         }
         if (request.getNickname() != null) {
             user.setNickname(request.getNickname());
